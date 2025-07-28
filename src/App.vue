@@ -1,60 +1,33 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SlideModal from './components/SlideUpModal.vue'
+import CurvedCornerModal from './components/CurvedCornerModal.vue'
 
-type Direction = 'up' | 'down' | 'left' | 'right' | null
-const modal = ref<Direction>(null)
-
-function openModal(dir: Direction) {
-  modal.value = dir
-}
-
-function closeModal() {
-  modal.value = null
-}
+const mostrar = ref(false)
 </script>
 
 <template>
   <main>
-    <h1>Modales Deslizantes</h1>
-    <div class="botones">
-      <button @click="openModal('up')">Desde Abajo</button>
-      <button @click="openModal('down')">Desde Arriba</button>
-      <button @click="openModal('left')">Desde la Derecha</button>
-      <button @click="openModal('right')">Desde la Izquierda</button>
-    </div>
+    <h1>Compuerta Curva Inferior Izquierda 🚪</h1>
+    <button @click="mostrar = !mostrar">
+      {{ mostrar ? 'Cerrar' : 'Abrir' }} compuerta
+    </button>
 
-    <SlideModal
-      v-if="modal"
-      :visible="true"
-      :direction="modal"
-      @close="closeModal"
-    >
-      <h2>Modal: {{ modal }}</h2>
-      <p>Este modal entra desde {{ modal }}</p>
-    </SlideModal>
+    <CurvedCornerModal :visible="mostrar">
+      🚨 Acceso a los motores nucleares
+    </CurvedCornerModal>
   </main>
 </template>
 
 <style scoped>
 main {
-  padding: 2rem;
   text-align: center;
+  padding: 2rem;
 }
-
-.botones {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
 button {
   padding: 10px 20px;
-  border: none;
   background-color: #646cff;
   color: white;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
