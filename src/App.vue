@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import SlideUpModal from './components/SlideUpModal.vue'
 
-const modal = ref<'up' | null>(null)
+const modal = ref<null | 'up'>(null)
 </script>
 
 <template>
