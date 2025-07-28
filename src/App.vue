@@ -1,33 +1,62 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SlideUpModal from './components/SlideUpModal.vue'
+import SlideModal from './components/SlideUpModal.vue'
 
-const modal = ref<null | 'up'>(null)
+type Direction = 'up' | 'down' | 'left' | 'right' | null
+const modal = ref<Direction>(null)
+
+function openModal(dir: Direction) {
+  modal.value = dir
+}
+
+function closeModal() {
+  modal.value = null
+}
 </script>
 
 <template>
   <main>
-    <h1>Modales</h1>
-    <button @click="modal = 'up'">Desde abajo</button>
+    <h1>Modales Deslizantes</h1>
+    <div class="botones">
+      <button @click="openModal('up')">Desde Abajo</button>
+      <button @click="openModal('down')">Desde Arriba</button>
+      <button @click="openModal('left')">Desde la Derecha</button>
+      <button @click="openModal('right')">Desde la Izquierda</button>
+    </div>
 
-    <SlideUpModal :visible="modal === 'up'" @close="modal = null">
-      <h2>Slide Up</h2>
-    </SlideUpModal>
+    <SlideModal
+      v-if="modal"
+      :visible="true"
+      :direction="modal"
+      @close="closeModal"
+    >
+      <h2>Modal: {{ modal }}</h2>
+      <p>Este modal entra desde {{ modal }}</p>
+    </SlideModal>
   </main>
 </template>
 
 <style scoped>
 main {
-  text-align: center;
   padding: 2rem;
+  text-align: center;
 }
+
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
 button {
-  margin: 0.5rem;
   padding: 10px 20px;
-  background: #646cff;
-  color: white;
   border: none;
+  background-color: #646cff;
+  color: white;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: bold;
 }
 </style>
